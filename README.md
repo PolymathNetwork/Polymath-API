@@ -1,1 +1,1 @@
-# Polymath-SDK
+# Polymath SDK

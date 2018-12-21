@@ -1,42 +1,36 @@
 {
-  "name": "polymath-sdk",
+  "name": "polymath-api",
   "version": "1.0.0",
-  "description": "",
-  "license": "MIT",
-  "repository": "PolymathNetwork/polymath-sdk",
-  "files": [
-    "lib/**/*"
-  ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "keywords": [
-    "polymath",
-    "sdk",
-    "javascript",
-    "typescript"
-  ],
+  "main": "./dist/myLib.min.js",
+  "types": "./dist/myLib.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "jest --config jestconfig.json",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
-  },
-  "dependencies": {
-    "@types/node": "^10.12.12"
+    "dev": "yarn cleaner && yarn tslint && webpack --mode development",
+    "dev:tsc": "tsc && tsc -m es6 --outDir dist/lib-esm",
+    "dev:watch": "nodemon --exec 'yarn dev || exit 1'",
+    "tslint": "tslint --project .",
+    "build": "yarn cleaner && yarn tslint && webpack --mode production",
+    "test": "jest && yarn demo:test",
+    "demo:test": "yarn build && cd demo && yarn install && yarn test",
+    "cleaner": "rm -rf dist",
+    "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
+    "@types/web3": "^1.0.14",
     "jest": "^23.6.0",
-    "polymath-core-artifacts": "^3.0.0",
-    "prettier": "^1.15.3",
-    "ts-jest": "^23.10.5",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "typescript": "^3.2.2"
+    "nodemon": "^1.17.5",
+    "ts-jest": "^23.10.4",
+    "ts-loader": "^5.2.2",
+    "tslint": "^5.10.0",
+    "typedoc": "^0.13.0",
+    "typedoc-webpack-plugin": "^1.1.4",
+    "typescript": "^3.2.1",
+    "uglifyjs-webpack-plugin": "^1.2.6",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8"
+  },
+  "dependencies": {
+    "bignumber.js": "^8.0.1",
+    "web3": "1.0.0-beta.30"
   }
 }
